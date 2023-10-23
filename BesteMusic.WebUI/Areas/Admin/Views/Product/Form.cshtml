@@ -1,0 +1,89 @@
+﻿@model ProductFormViewModel
+
+<div class="row">
+
+    <div class="col-8 offset-2">
+
+        <div class="card" style="border:solid 2px">
+
+            <div class="card-header fw-bold fs-5">
+                @(Model.Id == 0 ? "Ürün Ekleme Formu" : "Ürün Düzenleme Formu")
+            </div>
+
+            <div class="card-body">
+
+                <form method="post" asp-area="Admin" asp-controller="Product" asp-action="Save" enctype="multipart/form-data">
+                    @*Dosya taşıdığım için enctype ekledim.*@
+
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            @ViewBag.ErrorMessage
+                        </div>
+                    }
+
+                    <input asp-for="Id" type="hidden" class="rounded-pill" />
+                    @* id kontrol için, sonradan gizlenecek*@
+
+                    <div class="mb-2">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" type="text" class="form-control rounded-pill" />
+
+                        <span class="text-danger fw-bold mt-1 rounded-pill" asp-validation-for="Name"></span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label asp-for="Description"></label>
+                        <input asp-for="Description" type="text" class="form-control rounded-pill" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label asp-for="UnitPrice"></label>
+                        <input asp-for="UnitPrice" type="text" class="form-control rounded-pill" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label asp-for="UnitInStock"></label>
+                        <input asp-for="UnitInStock" type="number" class="form-control rounded-pill" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label asp-for="CategoryId"></label>
+                        <select asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))" asp-for="CategoryId" class="form-control rounded-pill">
+                            <option selected disabled>Seçiniz</option>
+                        </select>
+
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.CatError))
+                        {
+                            <span class="text-danger fw-bold mt-1 rounded-pill">@ViewBag.CatError</span>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.ImagePath))
+                    {
+                        <div class="mb-2">
+                            <img width="100" height="100" src="~/images/products/@ViewBag.ImagePath">
+                        </div>
+                    }
+
+                    <div class="mb-2">
+                        <label asp-for="File"></label>
+                        <input asp-for="File" type="file" class="form-control rounded-pill" />
+
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.FileError))
+                        {
+                            <span class="text-danger fw-bold mt-1 rounded-pill">@ViewBag.FileError</span>
+                        }
+
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3 float-end rounded-pill">@(Model.Id == 0 ? "Kaydet" : "Güncelle")</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,230 @@
+﻿@using BesteMusic.WebUI.Extensions;
+
+<html>
+
+<head>
+
+    <meta name="description" content="Müzik Aletleri Satış Sitesi">
+    <meta name="keywords" content="HTML, CSS, JavaScript, MVC6">
+    <meta name="author" content="Ayşe Orhan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+
+        label.required::after {
+            content: "*\00a0";
+            color: red;
+            margin-left: 2px;
+        }
+
+        #logo {
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+            #logo:hover {
+                filter: grayscale(0%);
+            }
+
+    </style>
+
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="p-3 text-bg-dark mb-3">
+        <div class="container">
+
+
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-3">
+                    <a href="/">
+                        <img src=~/images/logo/logo3.png width="200" height="100" />
+                    </a>
+                </div>
+               
+                <div class="mx-auto" style="margin:25px">
+
+                    <button onclick="davulCal()" class="btn btn-outline-warning">
+                        <img src="~/images/icons/icons8-drum-64.png" />
+                    </button>
+
+                    <button onclick="gitarCal()" class="btn btn-outline-danger">
+                        <img src="~/images/icons/icons8-guitar-58.png" />
+                    </button>
+
+                    <button onclick="saksafonCal()" class="btn btn-outline-success">
+                        <img src="~/images/icons/icons8-blowing-64.png" />
+                    </button>
+
+                    <button onclick="pianoCal()" id="piano" class="btn btn-outline-primary">
+                        <img src="~/images/icons/icons8-piano-64 (1).png" />
+                    </button>
+
+                    <button onclick="orgCal()" class="btn btn-outline-secondary">
+                        <img src="~/images/icons/icons8-piano-66.png" />
+                    </button>
+
+                    <button onclick="kemanCal()" class="btn btn-outline-info">
+                        <img src="~/images/icons/icons8-violin-64 (1).png" />
+                    </button>
+
+                   
+                </div>
+
+                <div class="d-none" id="login">
+                    <partial name="_LoginPartial" model="new LoginViewModel()">
+                </div>
+
+
+                @if (!User.IsLogged())
+                {
+                    <div id="welcome">
+                        <partial name="_WelcomePartial">
+                    </div>
+                }
+                else
+                {
+                    var firstName = User.GetUserFirstName();
+                    var lastName = User.GetUserLastName();
+
+                    <div class="d-flex">
+
+                        <div class="mt-2">
+                            Hoş Geldin @firstName @lastName
+                        </div>
+
+                        @if (User.IsAdmin())
+                        {
+                            <div class="ms-3">
+                                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-success rounded-pill">Yönetim Paneli</a>
+                            </div>
+                        }
+
+                        <div>
+                            <a asp-controller="Auth" asp-action="Logout" class="btn btn-outline-warning rounded-pill ms-3"><i class="bi bi-door-open-fill"></i>Çıkış Yap</a>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+
+    <footer class="card-footer text-center text-muted mt-auto py-5" style="font-family: Algerian;">
+
+
+
+        <div id="logo">
+
+            <a href="https://www.instagram.com/" target="_blank">
+                <img style="width:50px; height:50px" src="/images/instagram/instagram.jpg" />
+            </a>
+        </div>
+
+        <i class="bi bi-c-circle"></i>
+        Tüm hakları Ayşe ORHAN'a aittir.
+
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+
+       
+
+        const pwd = document.getElementById("pwd");
+        const chk = document.getElementById("chk");
+
+        chk.onchange = function (e) {
+            pwd.type = chk.checked ? "text" : "password";
+        };
+
+        $('#btnGirisYap').click(function () {
+            $('#login').removeClass('d-none')
+            $('#welcome').addClass('d-none')
+        })
+
+        $('#btnIptal').click(function () {
+            $('#login').addClass('d-none')
+            $('#welcome').removeClass('d-none')
+        })
+
+        const logo = document.getElementsByClassName("logo");
+
+        logo.addEventListener("mouseover", () => {
+            logo.style.filter = "none";
+        });
+
+        logo.addEventListener("mouseout", () => {
+            logo.style.filter = "grayscale(100%)";
+        });
+
+
+        function davulCal(){
+            var davul = new Audio('/music/davul.mp3');
+            davul.play();
+        }
+
+        function gitarCal(){
+            var gitar = new Audio('/music/gitar.mp3');
+            gitar.play();
+        }
+
+        function saksafonCal() {
+            var saksafon = new Audio('/music/saksafon.mp3');
+            saksafon.play();
+        }
+
+        function pianoCal() {
+            var piano = new Audio('/music/piyano.mp3');
+            piano.play();
+        }
+
+        function orgCal() {
+            var org = new Audio('/music/org.mp3');
+            org.play();
+        }
+
+        function kemanCal() {
+            var keman = new Audio('/music/keman.mp3');
+            keman.play();
+        }
+          
+
+                       
+
+        @if (!string.IsNullOrWhiteSpace(TempData["ErrorMessage"]?.ToString()))
+        {
+            @:toastr.warning("@TempData["ErrorMessage"]?.ToString()");
+
+        }
+
+
+        @if (!string.IsNullOrWhiteSpace(TempData["LoginMessage"]?.ToString()))
+        {
+            @:toastr.success("@TempData["LoginMessage"]?.ToString()");
+        }
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+﻿
+<html>
+<head>
+
+    <partial name="_StylesPartial"></partial>
+
+</head>
+<body>
+    
+   
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+
+                <span class="fs-4">BESTEMÜZİK YÖNETİM PANELİ</span>
+            </a>
+
+            <ul class="nav nav-pills">
+
+                <li class="nav-item"><a asp-area="Admin" asp-controller="Category" asp-action="List" class="nav-link" style="color:darkgoldenrod">KATEGORİLER</a></li>
+                <li class="nav-item"><a asp-area="Admin" asp-controller="Product" asp-action="List" class="nav-link" style="color:darkgoldenrod">ÜRÜNLER</a></li>
+
+            </ul>
+        </header>
+
+        <div class="container">
+        @RenderBody()
+        </div>
+    </div>
+
+    <partial name="_ScriptsPartial"></partial>
+
+    @await RenderSectionAsync("Scripts" , required:false);
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+﻿@model List<ListProductViewModel>
+
+<div>
+    <div class="float-start" style="color:darkgoldenrod"><h5>ÜRÜNLER</h5></div>
+    <div class="float-end"> <a asp-controller="Product" asp-action="New" class="btn btn-outline-secondary rounded-pill">YENİ ÜRÜN</a> </div>
+</div>
+
+<div style="padding-top:75px">
+
+    <table id="productTable" class="table table-striped">
+        <thead>
+
+            <tr>
+                <th style="width:150px"></th>
+                <th>Ürün Adı</th>
+                <th>Birim Fiyatı</th>
+                <th>Stok Miktarı</th>
+                <th>Kategori</th>
+                <th></th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(@p.ImagePath))
+                        {
+                            <img src="~/Images/noimage.jpg" width="120" height="120" />
+                        }
+                        else
+                        {
+                            <a href="~/Images/Products/@p.ImagePath" data-lightbox="@p.CategoryName" data-title="@p.Name">
+                                <img src="~/Images/Products/@p.ImagePath" width="120" height="120" />
+                            </a>
+                        }
+
+                    </td>
+
+                    <td>@p.Name</td>
+                    <td>@p.UnitPrice</td>
+                    <td>@p.UnitInStock</td>
+                    <td>@p.CategoryName</td>
+                    <td>
+
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-primary rounded-pill">Düzenle</a>
+                       
+                        @*AJAX(js) ILE ISTEK ATACAKSAM taghelper kullanmıyorum. *@
+                        <a class="btn btn-sm btn-danger btnDelete rounded-pill" href="#" data-name="sil" data-id="@p.Id">Sil</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts{
+
+<script>
+
+        var table = new DataTable('#productTable', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json',
+            },
+            pageLength:5
+        });
+
+        lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true,
+      'maxWidth' : 400,
+      'maxHeight' : 400,
+      'fitImagesInViewPort' : true
+    })
+
+    $('.btnDelete').click(function (e) {
+
+        e.preventDefault(); // linkin yönlendirme işlemini engelledim. (url'e # atmıyor.)
+
+        var productId = $(this).data('id'); // Butonun içerisine data-id şeklinde gömülen veriyi değişkene atadım.
+
+        Swal.fire({
+            title: 'Emin misiniz?',
+            text: "Dikkat! Ürün silinecektir.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet, Onaylıyorum!',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url: '/admin/product/delete/' + productId,
+                    method: 'GET'
+                    // url üzerinden istek attım.
+                }).done(function () {
+                    Swal.fire(
+                        'Silindi!',
+                        'Ürün başarıyla silindi.',
+                        'success'
+                    ).then(() => { window.location.reload() })
+                }).fail(function () {
+                    Swal.fire(
+                        'Hata!',
+                        'Ürün silinirken bir hata ile karşılaşıldı. Silme işlemi gerçekleşemedi.',
+                        'error'
+                    )
+                })
+            }
+        })
+               
+    })
+
+</script>
+
+}

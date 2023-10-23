@@ -1,0 +1,168 @@
+﻿@*<style>
+
+    .kare {
+        width: 100px;
+        height: 350px;
+        background-color: white;
+        display: inline-block;
+
+
+    }
+
+</style>
+
+<div class="row">
+
+    <div class="col-10 offset-2">
+
+        <div class="kare" style="border-style:solid; text-align:center">A</div>
+        <div class="kare" style="border-style:solid; text-align:center">S</div>
+        <div class="kare" style="border-style:solid; text-align:center">D</div>
+        <div class="kare" style="border-style:solid; text-align:center">F</div>
+        <div class="kare" style="border-style:solid; text-align:center">G</div>
+        <div class="kare" style="border-style:solid; text-align:center">H</div>
+        <div class="kare" style="border-style:solid; text-align:center">J</div>
+        <div class="kare" style="border-style:solid; text-align:center">K</div>
+
+
+
+    </div>
+
+</div>*@
+
+<style>
+
+    .kare {
+        width: 100px;
+        height: 350px;
+        background-color: white;
+        display: inline-block;
+        margin: 1px;
+        text-align: center;
+        position: relative;
+    }
+
+    .harf {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+</style>
+
+<div class="row">
+
+    <div class="col-10 offset-2">
+
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                A
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                S
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                D
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                F
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                G
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                H
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                J
+            </div>
+        </div>
+        <div class="kare" style="border-style:solid">
+            <div class="harf">
+                K
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'a') {
+            var audio = new Audio('/piyano/notalar/do.mp3');
+            audio.play();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 's') {
+            var audio = new Audio('/piyano/notalar/re.mp3');
+            audio.play();
+        }
+    });
+
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'd') {
+            var audio = new Audio('/piyano/notalar/mi.mp3');
+            audio.play();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'f') {
+            var audio = new Audio('/piyano/notalar/fa.mp3');
+            audio.play();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'g') {
+            var audio = new Audio('/piyano/notalar/sol.mp3');
+            audio.play();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'h') {
+            var audio = new Audio('/piyano/notalar/la.mp3');
+            audio.play();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'j') {
+            var audio = new Audio('/piyano/notalar/si.mp3');
+            audio.play();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'k') {
+            var audio = new Audio('/piyano/notalar/do2.mp3');
+            audio.play();
+        }
+    });
+
+</script>
+
+
+
+
+
+
+
